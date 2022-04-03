@@ -8,6 +8,8 @@ public class TestForFullConnection : MonoBehaviour
 {
     public string address;
     public int port;
+
+    public RenderWorld renderWorld;
     ServerConnection serverConnection;
     const string PlayerId = "ARoomba";
     // Start is called before the first frame update
@@ -50,7 +52,9 @@ public class TestForFullConnection : MonoBehaviour
             if (serverConnection.HasMessage) {
                 ICarrierPigeon carrier = serverConnection.DequeueMessage();
                 MapSector mapSector = PayloadExtractor.GetMapSector(carrier);
-                Debug.Log(mapSector.LandMapEncoded);
+                int[,] map = mapSector.DecodeMap();
+                Debug.Log(mapSector.DecodeMap());
+                renderWorld.RenderMap(map,(0,0));
                 PlayerFirmwareChange firmwareChange = new PlayerFirmwareChange() {
                     Code = "while(true){move_south() move_west()}",
                     PlayerId = PlayerId,
