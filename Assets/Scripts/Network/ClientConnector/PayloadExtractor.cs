@@ -18,6 +18,16 @@ namespace ClientConnector
             return null;
         }
 
+        public static RobotMovementEvent GetRobotMovementEvent(ICarrierPigeon carrier)
+        {
+            if (Verify(carrier, "PlayerRobotMoveMessage"))
+            {
+                return ((CarrierPigeon<RobotMovementEvent>)carrier).payload;
+            }
+
+            return null;
+        }
+
         public static Handshake GetHandshake(ICarrierPigeon carrier)
         {
             if (Verify(carrier, "Handshake"))
