@@ -10,21 +10,25 @@ public class RenderWorld : MonoBehaviour
     public Tilemap tilemap;
     public TileBase tile; 
     public TileBase tilenull;
+ /* 
     // Start is called before the first frame update
     void Start()
     {
-        map = GenerateArray(100, 100, false);
-        map = new int[8, 8] { { 0,0,0,0,0,0,0,0},
+        //map = GenerateArray(100, 100, false);
+        //map = new int[8, 8] {{ 0,1,0,0,0,0,0,0},
                             { 0,0,0,0,0,0,0,0},
                             { 0,0,0,1,1,0,0,0},
                             { 0,0,1,1,1,0,0,0},
                             { 0,0,0,0,0,0,0,0},
                             { 0,0,0,0,1,1,1,1},
                             { 0,0,0,0,1,1,0,0},
-                            { 0,0,0,0,0,0,0,0}};
-        RenderMap(map, tilemap, tile,tilenull);
+                            { 1,0,0,0,0,0,0,0}};
+        //RenderMap(map, tilemap, tile, tilenull, (-8, 8)); //top left
+        //RenderMap(map, tilemap, tile,tilenull,(0,8));   //top right
+        //RenderMap(map, tilemap, tile, tilenull, (-8, 0));// bottom left
+        //RenderMap(map, (0, 0));// bottom right
     }
-
+*/
     // Update is called once per frame
     void Update()
     {
@@ -47,20 +51,21 @@ public class RenderWorld : MonoBehaviour
         }
         return map;
     }
-    public static void RenderMap(int[,] map, Tilemap tilemap, TileBase tile, TileBase tileempty)
+   
+
+    public void RenderMap(int[,] map, (int x,int y)offset)
     {
-        //Clear the map (ensures we dont overlap)
-        tilemap.ClearAllTiles();
         //Loop through the width of the map
-        for (int x = 0; x < map.GetUpperBound(0); x++) {
+        for (int y = 0; y <= map.GetUpperBound(0); y++) {
             //Loop through the height of the map
-            for (int y = 0; y < map.GetUpperBound(1); y++) {
+            for (int x = 0; x <= map.GetUpperBound(1); x++) {
                 // 1 = tile, 0 = no tile
                 if (map[x, y] == 1) {
-                    tilemap.SetTile(new Vector3Int(x, y, 0), tile);
+                    Debug.Log(x + y + "" + 1);
+                    tilemap.SetTile(new Vector3Int(y+offset.x, -x+offset.y, 0), tile);
                 }
                 else {
-                    tilemap.SetTile(new Vector3Int(x, y, 0), tileempty);
+                    tilemap.SetTile(new Vector3Int(y+offset.x, -x+offset.y, 0), tilenull);
                 }
             }
         }
