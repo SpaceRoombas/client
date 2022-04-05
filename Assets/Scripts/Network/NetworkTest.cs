@@ -4,6 +4,8 @@ using ClientConnector;
 
 public class NetworkTest : MonoBehaviour
 {
+    public RobotMaster robotMaster;
+    public RenderWorld renderWorld;
     public string address;
     public int port;
     ServerConnection serverConnection;
@@ -56,12 +58,16 @@ public class NetworkTest : MonoBehaviour
                 if(carrier.GetPayloadType() == "MapSector")
                 {
                     Debug.Log("Got our MapSector, shooting code change");
+                    MapSector mapSector = PayloadExtractor.GetMapSector(carrier);
+                    int[,] map = mapSector.DecodeMap();
+                    Debug.Log(mapSector.DecodeMap());
+                    renderWorld.RenderMap(map, (0, 0));
                     this.ShootFirmwareChange();
                 }
 
                 if(carrier.GetPayloadType() == "PlayerRobotMoveMessage")
                 {
-                    this.LogRobotPosition(carrier);
+                    this.MoveRobotPosition(carrier);
                 }
             }
         }
@@ -72,7 +78,7 @@ public class NetworkTest : MonoBehaviour
     {
         PlayerFirmwareChange firmwareChange = new PlayerFirmwareChange()
         {
-            Code = "while(true){move_south() move_west()}",
+            Code = "while(true){move_south() move_west() move_north() move_east()}",
             PlayerId = PlayerId,
             RobotId = "r0"
         };
@@ -85,5 +91,13 @@ public class NetworkTest : MonoBehaviour
     {
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
+    }
+
+    private void MoveRobotPosition(ICarrierPigeon carrier)
+    {
+        RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
+        Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
+        robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y));
+        
     }
 }

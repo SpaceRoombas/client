@@ -61,7 +61,7 @@ public class RenderWorld : MonoBehaviour
             for (int x = 0; x <= map.GetUpperBound(1); x++) {
                 // 1 = tile, 0 = no tile
                 if (map[x, y] == 1) {
-                    Debug.Log(x + y + "" + 1);
+                    
                     tilemap.SetTile(new Vector3Int(y+offset.x, -x+offset.y, 0), tile);
                 }
                 else {
