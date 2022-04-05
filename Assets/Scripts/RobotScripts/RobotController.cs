@@ -78,7 +78,7 @@ public class RobotController : MonoBehaviour
         float t = 0f;
         while (t < 1f) {
             transform.position = Vector3.Lerp(startPos, endPos, t);
-            t += Time.deltaTime;
+            t += Time.deltaTime*4;
             yield return null;
         }
         Debug.Log("Corrotine finish");

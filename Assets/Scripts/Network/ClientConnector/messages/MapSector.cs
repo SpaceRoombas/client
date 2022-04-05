@@ -40,7 +40,7 @@ namespace ClientConnector.messages
             {
                 for (int j = 0; j < this.MapColumns; j++)
                 {
-                    map[i, j] = this.LandMapEncoded[c] == '0' ? 0 : 1;
+                    map[j, i] = this.LandMapEncoded[c] == '0' ? 0 : 1;
                     c++;
                 }
             }

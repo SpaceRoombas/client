@@ -10,6 +10,8 @@ public class RobotMaster : MonoBehaviour
     void Start()
     {
         robots = new Dictionary<string, RobotController>();
+        //MoveRobot("R0", (0, 0));
+        //MoveRobot("R1", (1, 3));
 
     }
 
@@ -20,7 +22,7 @@ public class RobotMaster : MonoBehaviour
             GameObject r = Instantiate(robotPref, this.transform);
             r.name = name;
 
-            Vector3 spawnpoint = new Vector3(position.y, -position.x);
+            Vector3 spawnpoint = new Vector3(position.x, -position.y);
             r.transform.position = spawnpoint;
 
             RobotController controller = r.GetComponent<RobotController>();
@@ -31,7 +33,7 @@ public class RobotMaster : MonoBehaviour
         else {
             Debug.Log("robot already created,moving");
             RobotController controller = gameObject.transform.Find(name).GetComponent<RobotController>();
-            controller.MoveToPos(new Vector3(position.y, -position.x));
+            controller.MoveToPos(new Vector3( position.x, -position.y));
         }
     }
    

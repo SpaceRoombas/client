@@ -6,6 +6,7 @@ public class NetworkTest : MonoBehaviour
 {
     public RobotMaster robotMaster;
     public RenderWorld renderWorld;
+    public string firmware;
     public string address;
     public int port;
     ServerConnection serverConnection;
@@ -29,6 +30,7 @@ public class NetworkTest : MonoBehaviour
     }
     void Start()
     {
+        firmware = "while(true) { move_north() move_west() move_west() move_south() move_south() move_east() move_east() }";
         Debug.Log("Connecting");
         serverConnection.Connect();
     }
@@ -71,6 +73,9 @@ public class NetworkTest : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.K)){
+            this.ShootFirmwareChange();
+        }
         serverConnection.Tick();
     }
 
@@ -78,7 +83,7 @@ public class NetworkTest : MonoBehaviour
     {
         PlayerFirmwareChange firmwareChange = new PlayerFirmwareChange()
         {
-            Code = "while(true){move_south() move_west() move_north() move_east()}",
+            Code = firmware,
             PlayerId = PlayerId,
             RobotId = "r0"
         };
@@ -95,6 +100,7 @@ public class NetworkTest : MonoBehaviour
 
     private void MoveRobotPosition(ICarrierPigeon carrier)
     {
+        Debug.Log("que size:"+serverConnection.quesize);
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
         robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y));
