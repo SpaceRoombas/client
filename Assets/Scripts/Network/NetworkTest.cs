@@ -30,7 +30,7 @@ public class NetworkTest : MonoBehaviour
     }
     void Start()
     {
-        firmware = "while(true) { move_north() move_west() move_west() move_south() move_south() move_east() move_east() }";
+        firmware = "  move_east() ";
         Debug.Log("Connecting");
         serverConnection.Connect();
     }
