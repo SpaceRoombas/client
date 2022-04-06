@@ -10,7 +10,7 @@ public class NetworkTest : MonoBehaviour
     public string address;
     public int port;
     ServerConnection serverConnection;
-    const string PlayerId = "ARoomba";
+    const string PlayerId = "TheBetterRoomba";
     // Start is called before the first frame update
 
     private void Awake()
@@ -100,7 +100,7 @@ public class NetworkTest : MonoBehaviour
 
     private void MoveRobotPosition(ICarrierPigeon carrier)
     {
-        Debug.Log("que size:"+serverConnection.quesize);
+        //Debug.Log("que size:"+serverConnection.quesize);
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
         robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y));

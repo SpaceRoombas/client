@@ -17,7 +17,7 @@ public class RobotMaster : MonoBehaviour
 
 
     public void MoveRobot(string name, (int x, int y) position) {
-        Debug.Log("Move Robot");
+        
         if (robots.ContainsKey(name) == false) {
             GameObject r = Instantiate(robotPref, this.transform);
             r.name = name;
@@ -31,7 +31,7 @@ public class RobotMaster : MonoBehaviour
             robots.Add(name, controller);
         }
         else {
-            Debug.Log("robot already created,moving");
+
             RobotController controller = gameObject.transform.Find(name).GetComponent<RobotController>();
             controller.MoveToPos(new Vector3( position.x, -position.y));
         }
