@@ -10,12 +10,12 @@ public class RenderWorld : MonoBehaviour
     public Tilemap tilemap;
     public TileBase tile; 
     public TileBase tilenull;
- /* 
+ /*
     // Start is called before the first frame update
     void Start()
     {
-        //map = GenerateArray(100, 100, false);
-        //map = new int[8, 8] {{ 0,1,0,0,0,0,0,0},
+        map = GenerateArray(100, 100, false);
+        map = new int[8, 8] {{ 0,1,0,0,0,0,0,0},
                             { 0,0,0,0,0,0,0,0},
                             { 0,0,0,1,1,0,0,0},
                             { 0,0,1,1,1,0,0,0},
@@ -26,9 +26,9 @@ public class RenderWorld : MonoBehaviour
         //RenderMap(map, tilemap, tile, tilenull, (-8, 8)); //top left
         //RenderMap(map, tilemap, tile,tilenull,(0,8));   //top right
         //RenderMap(map, tilemap, tile, tilenull, (-8, 0));// bottom left
-        //RenderMap(map, (0, 0));// bottom right
+        RenderMap(map, (0, 0));// bottom right
     }
-*/
+ */
     // Update is called once per frame
     void Update()
     {
@@ -61,7 +61,7 @@ public class RenderWorld : MonoBehaviour
             for (int x = 0; x <= map.GetUpperBound(1); x++) {
                 // 1 = tile, 0 = no tile
                 if (map[x, y] == 1) {
-                    Debug.Log(x + y + "" + 1);
+                    
                     tilemap.SetTile(new Vector3Int(y+offset.x, -x+offset.y, 0), tile);
                 }
                 else {

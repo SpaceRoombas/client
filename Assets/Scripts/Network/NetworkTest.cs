@@ -4,10 +4,13 @@ using ClientConnector;
 
 public class NetworkTest : MonoBehaviour
 {
+    public RobotMaster robotMaster;
+    public RenderWorld renderWorld;
+    public string firmware;
     public string address;
     public int port;
     ServerConnection serverConnection;
-    const string PlayerId = "ARoomba";
+    const string PlayerId = "TheBetterRoomba";
     // Start is called before the first frame update
 
     private void Awake()
@@ -27,6 +30,7 @@ public class NetworkTest : MonoBehaviour
     }
     void Start()
     {
+        firmware = "  move_east() ";
         Debug.Log("Connecting");
         serverConnection.Connect();
     }
@@ -56,14 +60,26 @@ public class NetworkTest : MonoBehaviour
                 if(carrier.GetPayloadType() == "MapSector")
                 {
                     Debug.Log("Got our MapSector, shooting code change");
+                    MapSector mapSector = PayloadExtractor.GetMapSector(carrier);
+                    int[,] map = mapSector.DecodeMap();
+                    Debug.Log(mapSector.DecodeMap());
+                    renderWorld.RenderMap(map, (0, 0));
                     this.ShootFirmwareChange();
                 }
 
                 if(carrier.GetPayloadType() == "PlayerRobotMoveMessage")
                 {
-                    this.LogRobotPosition(carrier);
+                    this.MoveRobotPosition(carrier);
+                }
+
+                if (carrier.GetPayloadType() == "RobotListingMessage")
+                {
+                    this.LogRobotListing(carrier);
                 }
             }
+        }
+        if (Input.GetKeyDown(KeyCode.K)){
+            this.ShootFirmwareChange();
         }
         serverConnection.Tick();
     }
@@ -72,7 +88,7 @@ public class NetworkTest : MonoBehaviour
     {
         PlayerFirmwareChange firmwareChange = new PlayerFirmwareChange()
         {
-            Code = "while(true){move_south() move_west()}",
+            Code = firmware,
             PlayerId = PlayerId,
             RobotId = "r0"
         };
@@ -85,5 +101,20 @@ public class NetworkTest : MonoBehaviour
     {
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
+    }
+
+    private void MoveRobotPosition(ICarrierPigeon carrier)
+    {
+        //Debug.Log("que size:"+serverConnection.quesize);
+        RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
+        Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
+        robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y));
+        
+    }
+
+    private void LogRobotListing(ICarrierPigeon carrier)
+    {
+        RobotListing listing = PayloadExtractor.GetRobotListing(carrier);
+        Debug.Log("Caught robot listing");
     }
 }

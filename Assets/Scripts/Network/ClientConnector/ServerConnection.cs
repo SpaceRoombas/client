@@ -8,7 +8,7 @@ namespace ClientConnector
 {
     public class ServerConnection
     {
-        const int MESSAGE_HANDLE_MAX = 20;
+        const int MESSAGE_HANDLE_MAX = 100;
         const int RETRY_MAX = 3; // adjustable
 
         /**
@@ -32,6 +32,9 @@ namespace ClientConnector
         {
             get => this._mode;
         }
+
+        public int quesize { get => this.recieveQueue.Count; }
+
 
         // state
         private PlayerDetails playerDetails;
