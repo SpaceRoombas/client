@@ -23,6 +23,7 @@ namespace ClientConnector
             this.deserializationTypes.Add("Handshake", typeof(CarrierPigeon<Handshake>));
             this.deserializationTypes.Add("MapSector", typeof(CarrierPigeon<MapSector>));
             this.deserializationTypes.Add("PlayerRobotMoveMessage", typeof(CarrierPigeon<RobotMovementEvent>));
+            this.deserializationTypes.Add("RobotListingMessage", typeof(CarrierPigeon<RobotListing>));
         }
 
         private void initalizeCarrierTypes()

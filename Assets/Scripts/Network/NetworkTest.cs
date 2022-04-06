@@ -71,6 +71,11 @@ public class NetworkTest : MonoBehaviour
                 {
                     this.MoveRobotPosition(carrier);
                 }
+
+                if (carrier.GetPayloadType() == "RobotListingMessage")
+                {
+                    this.LogRobotListing(carrier);
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.K)){
@@ -105,5 +110,11 @@ public class NetworkTest : MonoBehaviour
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
         robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y));
         
+    }
+
+    private void LogRobotListing(ICarrierPigeon carrier)
+    {
+        RobotListing listing = PayloadExtractor.GetRobotListing(carrier);
+        Debug.Log("Caught robot listing");
     }
 }

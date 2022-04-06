@@ -38,6 +38,16 @@ namespace ClientConnector
             return null;
         }
 
+        public static RobotListing GetRobotListing(ICarrierPigeon carrier)
+        {
+            if (Verify(carrier, "RobotListingMessage"))
+            {
+                return ((CarrierPigeon<RobotListing>)carrier).payload;
+            }
+
+            return null;
+        }
+
 
     }
 }
