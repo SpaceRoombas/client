@@ -8,6 +8,7 @@ public class RenderWorld : MonoBehaviour
     int[,] map;
 
     public Tilemap tilemap;
+    public Tilemap resourceTilemap;
     public TileBase tile; 
     public TileBase tilenull;
  /*
@@ -62,7 +63,8 @@ public class RenderWorld : MonoBehaviour
                 // 1 = tile, 0 = no tile
                 if (map[x, y] == 1) {
                     
-                    tilemap.SetTile(new Vector3Int(y+offset.x, -x+offset.y, 0), tile);
+                    tilemap.SetTile(new Vector3Int(y+offset.x, -x+offset.y, 0), tilenull);
+                    resourceTilemap.SetTile(new Vector3Int(y + offset.x, -x + offset.y, 0), tile);
                 }
                 else {
                     tilemap.SetTile(new Vector3Int(y+offset.x, -x+offset.y, 0), tilenull);
