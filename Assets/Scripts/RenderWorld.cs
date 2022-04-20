@@ -14,6 +14,7 @@ public class RenderWorld : MonoBehaviour
     
     public static int sectorSize;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,6 +98,11 @@ public class RenderWorld : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void RemoveTile((int x, int y) position, string sector) {
+        (int x, int y) offset = RenderWorld.ParseSector(sector);
+        resourceTilemap.SetTile(new Vector3Int(position.x + offset.x, -position.y + offset.y, 0), null);
     }
 
     
