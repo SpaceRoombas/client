@@ -54,7 +54,7 @@ public class TestForFullConnection : MonoBehaviour
                 MapSector mapSector = PayloadExtractor.GetMapSector(carrier);
                 int[,] map = mapSector.DecodeMap();
                 Debug.Log(mapSector.DecodeMap());
-                renderWorld.RenderMap(map,(0,0));
+                //renderWorld.RenderMap(map,(0,0));
                 PlayerFirmwareChange firmwareChange = new PlayerFirmwareChange() {
                     Code = "while(true){move_south() move_west()}",
                     PlayerId = PlayerId,

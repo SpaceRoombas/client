@@ -16,8 +16,8 @@ public class RobotMaster : MonoBehaviour
     }
 
 
-    public void MoveRobot(string name, (int x, int y) position) {
-        
+    public void MoveRobot(string name, (int x, int y) position,string sector) {
+        (int x, int y) offset = RenderWorld.ParseSector(sector);
         if (robots.ContainsKey(name) == false) {
             GameObject r = Instantiate(robotPref, this.transform);
             r.name = name;
@@ -33,8 +33,10 @@ public class RobotMaster : MonoBehaviour
         else {
 
             RobotController controller = gameObject.transform.Find(name).GetComponent<RobotController>();
-            controller.MoveToPos(new Vector3( position.x, -position.y));
+            controller.MoveToPos(new Vector3( position.x+offset.x, -position.y+offset.y));
         }
     }
+
+    
    
 }

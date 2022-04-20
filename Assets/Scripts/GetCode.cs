@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class GetCode : MonoBehaviour
 {
     public TMP_InputField code;
+    public NetworkInterface network;
 
     public void getCode()
     {
-        Debug.Log(code.text);
+        Debug.Log("submit code:"+code.text);
+        network.SendFirmwareChange("r0", code.text);
     }
 }
