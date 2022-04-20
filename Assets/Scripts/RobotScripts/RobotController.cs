@@ -74,10 +74,29 @@ public class RobotController : MonoBehaviour
         Vector3 startPos = transform.position;
         float t = 0f;
         while (t < 1f) {
+            
             transform.position = Vector3.Lerp(startPos, endPos, t);
+            Vector3 change = transform.position - startPos;
+            if (Mathf.Abs(change.x) > Mathf.Abs(change.y)) {
+                if (change.x > 0) {
+                    animator.SetInteger("Direction", 2);
+                }
+                else {
+                    animator.SetInteger("Direction", 3);
+                }
+            }
+            else {
+                if (change.y > 0) {
+                    animator.SetInteger("Direction", 1);
+                }
+                else {
+                    animator.SetInteger("Direction", 0);
+                }
+            }
             t += Time.deltaTime*4;
             yield return null;
         }
+        animator.SetInteger("Direction", 0);
         //Debug.Log("Corrotine finish");
         corRunning = false;
     }

@@ -29,7 +29,7 @@ public class RenderWorld : MonoBehaviour
                             { 0,0,0,0,1,1,1,1},
                             { 0,0,0,0,1,1,0,0},
                             { 1,0,0,0,0,0,0,0}};
-        */
+        
         //RenderMap(map, tilemap, tile, tilenull, (-8, 8)); //top left
         //RenderMap(map, tilemap, tile,tilenull,(0,8));   //top right
         //RenderMap(map, tilemap, tile, tilenull, (-8, 0));// bottom left
@@ -37,7 +37,7 @@ public class RenderWorld : MonoBehaviour
         map[0, 0] = 1;
         map[map.GetUpperBound(0), 0] = 1;
         RenderMap(map, "0, 0");// bottom right
-        
+        */
         
     }
  

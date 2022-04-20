@@ -64,7 +64,7 @@ public class NetworkInterface : MonoBehaviour
                     int[,] map = mapSector.DecodeMap();
                     Debug.Log(mapSector.DecodeMap());
                     
-                    renderWorld.RenderMap(map, "0,1");
+                    renderWorld.RenderMap(map, "0,0");
                 }
 
                 if(carrier.GetPayloadType() == "PlayerRobotMoveMessage")
@@ -107,7 +107,7 @@ public class NetworkInterface : MonoBehaviour
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
       
-        string sectorID = "0,1";
+        string sectorID = "0,0";
         robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y),sectorID);
         
     }
