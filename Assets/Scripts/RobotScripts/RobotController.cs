@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RobotController : MonoBehaviour
 {
+    
     public float speed;
     public bool playerControlled;
 
@@ -53,10 +54,6 @@ public class RobotController : MonoBehaviour
             animator.SetBool("IsMoving", dir.magnitude > 0);
 
             gameObject.transform.position += Time.deltaTime * speed * dir;
-        }
-        if (Input.GetKeyDown(KeyCode.H)) {
-            goalPosition.x += 10;
-            MoveToPos(goalPosition);
         }
 
     }

@@ -2,11 +2,11 @@ using UnityEngine;
 using ClientConnector.messages;
 using ClientConnector;
 
-public class NetworkTest : MonoBehaviour
+public class NetworkInterface : MonoBehaviour
 {
     public RobotMaster robotMaster;
     public RenderWorld renderWorld;
-    public string firmware;
+
     public string address;
     public int port;
     ServerConnection serverConnection;
@@ -30,7 +30,7 @@ public class NetworkTest : MonoBehaviour
     }
     void Start()
     {
-        firmware = "  move_east() ";
+
         Debug.Log("Connecting");
         serverConnection.Connect();
     }
@@ -63,8 +63,8 @@ public class NetworkTest : MonoBehaviour
                     MapSector mapSector = PayloadExtractor.GetMapSector(carrier);
                     int[,] map = mapSector.DecodeMap();
                     Debug.Log(mapSector.DecodeMap());
-                    renderWorld.RenderMap(map, (0, 0));
-                    this.ShootFirmwareChange();
+                    
+                    renderWorld.RenderMap(map, "0,1");
                 }
 
                 if(carrier.GetPayloadType() == "PlayerRobotMoveMessage")
@@ -78,19 +78,17 @@ public class NetworkTest : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.K)){
-            this.ShootFirmwareChange();
-        }
+   
         serverConnection.Tick();
     }
 
-    private void ShootFirmwareChange()
+    public void SendFirmwareChange(string rID,string newFirmware)
     {
         PlayerFirmwareChange firmwareChange = new PlayerFirmwareChange()
         {
-            Code = firmware,
+            Code = newFirmware,
             PlayerId = PlayerId,
-            RobotId = "r0"
+            RobotId = rID
         };
 
         // send code change
@@ -108,13 +106,19 @@ public class NetworkTest : MonoBehaviour
         //Debug.Log("que size:"+serverConnection.quesize);
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
-        robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y));
+      
+        string sectorID = "0,1";
+        robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y),sectorID);
         
     }
 
     private void LogRobotListing(ICarrierPigeon carrier)
     {
         RobotListing listing = PayloadExtractor.GetRobotListing(carrier);
+        foreach (Robot r in listing.robots) {
+            robotMaster.MoveRobot(r.RobotId, (r.Location.X, r.Location.Y), r.Location.SectorId);
+        }
         Debug.Log("Caught robot listing");
+     
     }
 }

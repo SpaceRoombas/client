@@ -13,3 +13,4 @@ namespace ClientConnector.messages
         public int Y { get; set; }
     }
 }
+
