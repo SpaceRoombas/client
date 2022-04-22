@@ -31,6 +31,9 @@ namespace ClientConnector.messages
         [JsonPropertyName("map_cols")]
         public int MapColumns { get; set; }
 
+        [JsonPropertyName("sector_id")]
+        public string SectorId { get; set; }
+
         public int[,] DecodeMap()
         {
             int[,] map = new int[this.MapRows, this.MapColumns];
