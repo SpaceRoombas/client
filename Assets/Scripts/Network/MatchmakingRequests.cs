@@ -10,6 +10,7 @@ public class MatchmakingRequests
     const string LOGIN_ENDPOINT = "http://localhost:9000/login";
     const string JOIN_ENDPOINT = "http://localhost:9000/joinmatch";
     const string LISTING_ENDPOINT = "http://localhost:9000/fetchmatches";
+    const string REGISTER_ENDPOINT = "http://localhost:9000/register";
 
     public static IEnumerator PerformLoginRequest(string user, string pass, ILoginResponseHandler responseHandler)
     {
@@ -36,6 +37,37 @@ public class MatchmakingRequests
                     break;
                 default:
                     responseHandler.LoginFailure(GetErrorForHttpCode(999));
+                    break;
+            }
+        }
+    }
+
+    public static IEnumerator PerformRegistrationRequest(string user, string pass, string email, IRegisterHandler responseHandler)
+    {
+        PlayerRegistration regDetails = new PlayerRegistration(user, pass, email);
+        string requestJson = JsonSerializer.Serialize(regDetails, regDetails.GetType());
+
+        using (UnityWebRequest req = RequestFactory.createPostRequest(REGISTER_ENDPOINT, requestJson))
+        {
+
+            RegistrationError error;
+
+            yield return req.SendWebRequest();
+
+            switch (req.result)
+            {
+                case UnityWebRequest.Result.Success:
+                    responseHandler.HandleRegister();
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    error = ExtractRegistrationError(req.downloadHandler);
+                    responseHandler.HandleRegisterFailure(error.ErrorMessage);
+                    break;
+                case UnityWebRequest.Result.ConnectionError:
+                    responseHandler.HandleRegisterFailure(GetErrorForHttpCode(999));
+                    break;
+                default:
+                    responseHandler.HandleRegisterFailure(GetErrorForHttpCode(999));
                     break;
             }
         }
@@ -131,5 +163,12 @@ public class MatchmakingRequests
         string contents = downloader.text;
 
         return (GameListing)JsonSerializer.Deserialize(contents, typeof(GameListing));
+    }
+
+    static RegistrationError ExtractRegistrationError(DownloadHandler downloader)
+    {
+        string contents = downloader.text;
+
+        return (RegistrationError)JsonSerializer.Deserialize(contents, typeof(RegistrationError));
     }
 }
