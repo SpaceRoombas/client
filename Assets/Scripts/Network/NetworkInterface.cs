@@ -1,6 +1,7 @@
 using UnityEngine;
 using ClientConnector.messages;
 using ClientConnector;
+using StaticContext;
 
 public class NetworkInterface : MonoBehaviour
 {
@@ -17,14 +18,14 @@ public class NetworkInterface : MonoBehaviour
     {
         PlayerDetails details = new PlayerDetails()
         {
-            PlayerName = PlayerId,
-            ServerAddress = "localhost",
-            MatchEndTimeMillis = 334563456,
-            TokenTimeMillis = 329923929,
-            HMACString = "L3KM45LQK234M5LQ2K34M"
+            PlayerName = GameConnectionContext.Username,
+            ServerAddress = GameConnectionContext.Host,
+            MatchEndTimeMillis = 0,
+            TokenTimeMillis = 0,
+            HMACString = GameConnectionContext.Token
 
         };
-        serverConnection = new ServerConnection(details, address, port);
+        serverConnection = new ServerConnection(details, GameConnectionContext.Host, GameConnectionContext.Port);
 
         Debug.Log("Started ServerConnection");
     }
@@ -63,8 +64,8 @@ public class NetworkInterface : MonoBehaviour
                     MapSector mapSector = PayloadExtractor.GetMapSector(carrier);
                     int[,] map = mapSector.DecodeMap();
                     Debug.Log(mapSector.DecodeMap());
-                    
-                    renderWorld.RenderMap(map, "0,0");
+
+                    renderWorld.RenderMap(map, mapSector.SectorId);
                 }
 
                 if(carrier.GetPayloadType() == "PlayerRobotMoveMessage")
@@ -76,6 +77,12 @@ public class NetworkInterface : MonoBehaviour
                 {
                     this.LogRobotListing(carrier);
                 }
+
+                if (carrier.GetPayloadType() == "PlayerRobotErrorMessage")
+                {
+                    this.LogRobotError(carrier);
+                }
+
             }
         }
    
@@ -107,7 +114,7 @@ public class NetworkInterface : MonoBehaviour
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
       
-        string sectorID = "0,0";
+        string sectorID = "0,0"; // TODO Get sector id from robot position.
         robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y),sectorID);
         
     }
@@ -120,5 +127,14 @@ public class NetworkInterface : MonoBehaviour
         }
         Debug.Log("Caught robot listing");
      
+    }
+
+    private void LogRobotError(ICarrierPigeon carrier)
+    {
+        RobotErrorEvent err = PayloadExtractor.GetRobotErrorEvent(carrier);
+
+
+        Debug.LogError($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
+
     }
 }
