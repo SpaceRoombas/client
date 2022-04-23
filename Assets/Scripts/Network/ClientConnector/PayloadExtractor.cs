@@ -28,6 +28,16 @@ namespace ClientConnector
             return null;
         }
 
+        public static RobotErrorEvent GetRobotErrorEvent(ICarrierPigeon carrier)
+        {
+            if (Verify(carrier, "PlayerRobotErrorMessage"))
+            {
+                return ((CarrierPigeon<RobotErrorEvent>)carrier).payload;
+            }
+
+            return null;
+        }
+
         public static Handshake GetHandshake(ICarrierPigeon carrier)
         {
             if (Verify(carrier, "Handshake"))

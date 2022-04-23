@@ -77,6 +77,12 @@ public class NetworkInterface : MonoBehaviour
                 {
                     this.LogRobotListing(carrier);
                 }
+
+                if (carrier.GetPayloadType() == "PlayerRobotErrorMessage")
+                {
+                    this.LogRobotError(carrier);
+                }
+
             }
         }
    
@@ -121,5 +127,14 @@ public class NetworkInterface : MonoBehaviour
         }
         Debug.Log("Caught robot listing");
      
+    }
+
+    private void LogRobotError(ICarrierPigeon carrier)
+    {
+        RobotErrorEvent err = PayloadExtractor.GetRobotErrorEvent(carrier);
+
+
+        Debug.LogError($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
+
     }
 }
