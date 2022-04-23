@@ -12,6 +12,11 @@ namespace ClientConnector.messages
         public int X { get; set; }
         [JsonPropertyName("y")]
         public int Y { get; set; }
-  
+
+        [JsonPropertyName("old_location")]
+        public EntityLocation OldLocation { get; set; }
+        [JsonPropertyName("new_location")]
+        public EntityLocation NewLocation { get; set; }
+
     }
 }
