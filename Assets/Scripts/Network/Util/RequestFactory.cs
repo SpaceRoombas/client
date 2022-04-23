@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine.Networking;
 
 
-namespace ClientConnector.Utils
+namespace Network.Utils
 {
     public class RequestFactory
     {
@@ -15,6 +14,31 @@ namespace ClientConnector.Utils
             return new UnityWebRequest(endpoint, "POST", downloader, uploader);
         }
 
+        public static UnityWebRequest createAuthedGetRequest(string endpoint, string token, string json = "{}")
+        {
+            UploadHandler uploader;
+            DownloadHandler downloader;
+            UnityWebRequest request;
+
+            if (token == null || token == string.Empty)
+            {
+                throw new ArgumentException("Auth token missing, cannot create request");
+            }
+
+            uploader = createJsonUploadHandler(json);
+            downloader = new DownloadHandlerBuffer();
+            request = new UnityWebRequest(endpoint, "GET", downloader, uploader);
+
+            request.SetRequestHeader("Authorization", $"Bearer {token}");
+
+            return request;
+        }
+
+        /// <summary>
+        /// Creates an upload handler that sends raw json
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public static UploadHandler createJsonUploadHandler(string json)
         {
             byte[] bodyBytes = System.Text.Encoding.UTF8.GetBytes(json);

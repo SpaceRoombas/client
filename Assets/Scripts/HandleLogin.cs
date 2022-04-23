@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using StaticContext;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Network.Interfaces;
 
 public class HandleLogin : MonoBehaviour, ILoginResponseHandler
 {
@@ -28,7 +28,6 @@ public class HandleLogin : MonoBehaviour, ILoginResponseHandler
         string user = UsernameField.text;
         string pass = PasswordField.text;
 
-        Debug.Log($"Attempt login with: {user}:{pass}");
         setStatusMessage("Logging in..");
         StartCoroutine(MatchmakingRequests.PerformLoginRequest(user, pass, this));
 
