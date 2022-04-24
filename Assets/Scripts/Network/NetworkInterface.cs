@@ -108,16 +108,13 @@ public class NetworkInterface : MonoBehaviour
         serverConnection.EnqueueMessage(firmwareChange);
     }
 
-    private void LogRobotPosition(ICarrierPigeon carrier)
-    {
-        RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
-        Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
-    }
+
 
     private void MoveRobotPosition(ICarrierPigeon carrier)
     {
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
-        Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
+        Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\"" +
+            $" moved to -> X: {movementEvent.X} Y: {movementEvent.Y} sector: {movementEvent.NewLocation.SectorId}");
 
         string sectorID = movementEvent.NewLocation.SectorId;
         robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y), sectorID);
@@ -128,7 +125,9 @@ public class NetworkInterface : MonoBehaviour
     {
         RobotListing listing = PayloadExtractor.GetRobotListing(carrier);
         foreach (Robot r in listing.robots) {
-            robotMaster.MoveRobot(r.RobotId, (r.Location.X, r.Location.Y), r.Location.SectorId);
+            robotMaster.MoveRobot(r.RobotId, (r.Location.X, r.Location.Y), r.Location.SectorId,r.Firmware);
+            Debug.Log($" Robot \"{r.RobotId}\" made at -> X: {r.Location.X} Y: {r.Location.Y} sector: {r.Location.SectorId}");
+
         }
         Debug.Log("Caught robot listing");
      
@@ -164,7 +163,7 @@ public class NetworkInterface : MonoBehaviour
 
 
         Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined at {e.SectorId}:X:{e.X}Y:{e.Y}");
-
+        renderWorld.RemoveTile((e.X, e.Y), e.SectorId);
     }
 
     private void LogScoreUpdate(ICarrierPigeon carrier)

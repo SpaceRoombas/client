@@ -15,6 +15,16 @@ public class RobotController : MonoBehaviour
     private bool corRunning;
 
     [SerializeField]
+    public string firmware;
+
+    public string GetFirmware() {
+        return firmware;
+    }
+    public void SetFirmware(string firm) {
+        firmware = firm;
+    }
+
+    [SerializeField]
     private Vector3 goalPosition;
 
     public Vector3 GoalPosition { 
