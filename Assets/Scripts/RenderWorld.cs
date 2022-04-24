@@ -49,7 +49,7 @@ public class RenderWorld : MonoBehaviour
     }
 
     public static (int x, int y) ParseSector(string sector) {
-        Debug.Log("sector to parse:" + sector);
+
         string[] split = sector.Split(',');
         return (int.Parse(split[0])*sectorSize, int.Parse(split[1])*sectorSize);
     }
@@ -82,7 +82,7 @@ public class RenderWorld : MonoBehaviour
     public void RenderMap(int[,] map, string sector)
     {
         (int x,int y)offset= RenderWorld.ParseSector(sector);
-        Debug.Log("offset:"+ offset);
+        //Debug.Log("offset:"+ offset);
         //Loop through the width of the map
         for (int y = 0; y <= map.GetUpperBound(0); y++) {
             //Loop through the height of the map

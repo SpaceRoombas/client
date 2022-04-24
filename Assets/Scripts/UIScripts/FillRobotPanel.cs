@@ -34,7 +34,11 @@ public class FillRobotPanel : MonoBehaviour
             GameObject tile = Instantiate(panelPrefab) as GameObject;
             tile.transform.SetParent(scrollViewContent.transform, false);
             tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = child.name;
+            
             RobotController robotController = child.GetComponent<RobotController>();
+            tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = 
+                "" + (int)robotController.transform.position.x + "," + (int)robotController.transform.position.y;
+
             string firmware = robotController.GetFirmware();
             tile.transform.GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = "Code: " + firmware;
             tile.GetComponent<RobotViewButton>().setNameFirmware(child.name, firmware);
@@ -52,7 +56,11 @@ public class FillRobotPanel : MonoBehaviour
             GameObject tile = Instantiate(panelPrefab) as GameObject;
             tile.transform.SetParent(scrollViewContent.transform, false);
             tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = child.name;
+
             RobotController robotController = child.GetComponent<RobotController>();
+            tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text =
+                "" + (int)robotController.transform.position.x + "," + (int)robotController.transform.position.y;
+
             string firmware = robotController.GetFirmware();
             tile.transform.GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = "Code: " + firmware;
             tile.GetComponent<RobotViewButton>().setNameFirmware(child.name, firmware);
