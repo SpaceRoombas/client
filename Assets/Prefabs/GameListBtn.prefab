@@ -256,9 +256,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2728736862401895036, guid: bb89a3a52052a9c42be082910ab203d2, type: 3}
-        m_TargetAssemblyTypeName: MenuHandler, Assembly-CSharp
-        m_MethodName: AttemptGameJoin
+      - m_Target: {fileID: 2981392749788005534}
+        m_TargetAssemblyTypeName: GameListButtonClick, Assembly-CSharp
+        m_MethodName: OpenGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -281,3 +281,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   port: 0
+  host: 

@@ -17,6 +17,11 @@ namespace ClientConnector.messages
             port = p;
             Players = play;
         }
+
+        public MatchConnectionDetails()
+        {
+
+        }
     }
 
 
