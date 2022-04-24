@@ -58,15 +58,6 @@ public class NetworkInterface : MonoBehaviour
             if (serverConnection.HasMessage)
             {
                 ICarrierPigeon carrier = serverConnection.DequeueMessage();
-                if(carrier.GetPayloadType() == "MapSector")
-                {
-                    Debug.Log("Got our MapSector, shooting code change");
-                    MapSector mapSector = PayloadExtractor.GetMapSector(carrier);
-                    int[,] map = mapSector.DecodeMap();
-                    Debug.Log(mapSector.DecodeMap());
-
-                    renderWorld.RenderMap(map, mapSector.SectorId);
-                }
 
                 if(carrier.GetPayloadType() == "PlayerRobotMoveMessage")
                 {
@@ -85,7 +76,7 @@ public class NetworkInterface : MonoBehaviour
 
                 if(carrier.GetPayloadType() == "MapSectorListing")
                 {
-                    this.LogMapSectorListing(carrier);
+                    this.HandleIncomingMapSectorListing(carrier);
                 }
 
             }
@@ -143,7 +134,7 @@ public class NetworkInterface : MonoBehaviour
     }
 
 
-    private void LogMapSectorListing(ICarrierPigeon carrier)
+    private void HandleIncomingMapSectorListing(ICarrierPigeon carrier)
     {
         MapSectorListingUpdate listing = PayloadExtractor.GetMapSectorListingUpdate(carrier);
         int[,] map;
