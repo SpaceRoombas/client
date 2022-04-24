@@ -15,4 +15,10 @@ public class RobotViewButton : MonoBehaviour
         GameObject r = GameObject.Find("Robots/" + name);
         r.GetComponent<TMP_InputField>().text = firmware;
     }
+
+    public void setNameFirmware(string n, string f)
+    {
+        name = n;
+        firmware = f;
+    }
 }

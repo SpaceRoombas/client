@@ -14,7 +14,7 @@ public class RobotController : MonoBehaviour
     private bool corRunning;
 
     [SerializeField]
-    private string firmware;
+    public string firmware;
 
     public string GetFirmware() {
         return firmware;
