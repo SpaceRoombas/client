@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Network.Interfaces;
+using StaticContext;
 
-public class UpdateGameListButtons : MonoBehaviour
+public class UpdateGameListButtons : MonoBehaviour, IGameListingHandler
 {
     public GameObject listButtonPrefab;
     public GameObject scrollViewContent;
@@ -18,18 +20,8 @@ public class UpdateGameListButtons : MonoBehaviour
     }
     public void changeButtonInformation()
     {
-       
-
-        string[] opponent1 = { "cody", "andersen" };
-        string[] opponent2 = { "klayton" };
-        string[] opponent3 = { "enrique" };
-        string[] opponent4 = { "time" };
-
-        matchList[0] = new MatchConnectionDetails("tessa", 2, opponent1);
-        matchList[1] = new MatchConnectionDetails("andersen", 3, opponent2);
-        matchList[2] = new MatchConnectionDetails("cody", 1, opponent3);
-        matchList[3] = new MatchConnectionDetails("cody", 1, opponent4);
-
+        // remove existing buttons
+        scrollViewContent.transform.DetachChildren();
 
         for (int i = 0; i < matchList.Length; i++)
         {
@@ -37,15 +29,32 @@ public class UpdateGameListButtons : MonoBehaviour
             button.transform.SetParent(scrollViewContent.transform, false);
             button.GetComponentInChildren<TMP_Text>().text = (i + 1) + ".) Opponent(s): ";
 
-            GameListButtonClick btnPort = button.GetComponent<GameListButtonClick>();
-            btnPort.port = matchList[i].port;
+            GameListButtonClick btnClickState = button.GetComponent<GameListButtonClick>();
+            btnClickState.port = matchList[i].port;
+            btnClickState.host = matchList[i].Host;
 
             for (int j = 0; j < matchList[i].Players.Length; j++) 
             {
-                button.GetComponentInChildren<TMP_Text>().text += matchList[i].Players[j] + " ";
+                button.GetComponentInChildren<TMP_Text>().text += matchList[i].Players[j] + ", ";
             }
             
-            
         }
+    }
+
+    public void TriggerFetchGameListing()
+    {
+        StartCoroutine(MatchmakingRequests.PerformGameListingRequest(AuthenticationContext.Username, AuthenticationContext.Token, this));
+    }
+
+    public void HandleGameList(GameListing listing)
+    {
+        matchList = listing.ConnectionDetails;
+
+        changeButtonInformation();
+    }
+
+    public void HandleGameListingFailure(string reason)
+    {
+        Debug.LogError("Couldnt fetch game list");
     }
 }
