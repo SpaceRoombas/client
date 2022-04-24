@@ -4,13 +4,10 @@ using ClientConnector.messages;
 using System.Text.Json;
 using Network.Utils;
 using Network.Interfaces;
+using Network.Statics;
 public class MatchmakingRequests
 {
 
-    const string LOGIN_ENDPOINT = "http://localhost:9000/login";
-    const string JOIN_ENDPOINT = "http://localhost:9000/joinmatch";
-    const string LISTING_ENDPOINT = "http://localhost:9000/fetchmatches";
-    const string REGISTER_ENDPOINT = "http://localhost:9000/register";
 
     public static IEnumerator PerformLoginRequest(string user, string pass, ILoginResponseHandler responseHandler)
     {
@@ -18,7 +15,7 @@ public class MatchmakingRequests
         LoginToken loginToken;
         string requestJson = JsonSerializer.Serialize(loginDetails, loginDetails.GetType());
 
-        using (UnityWebRequest req = RequestFactory.createPostRequest(LOGIN_ENDPOINT, requestJson))
+        using (UnityWebRequest req = RequestFactory.createPostRequest(StaticNetworkEndpoints.LOGIN_ENDPOINT, requestJson))
         {
 
             yield return req.SendWebRequest();
@@ -47,7 +44,7 @@ public class MatchmakingRequests
         PlayerRegistration regDetails = new PlayerRegistration(user, pass, email);
         string requestJson = JsonSerializer.Serialize(regDetails, regDetails.GetType());
 
-        using (UnityWebRequest req = RequestFactory.createPostRequest(REGISTER_ENDPOINT, requestJson))
+        using (UnityWebRequest req = RequestFactory.createPostRequest(StaticNetworkEndpoints.REGISTER_ENDPOINT, requestJson))
         {
 
             RegistrationError error;
@@ -76,7 +73,7 @@ public class MatchmakingRequests
     public static IEnumerator PerformGameJoinRequest(string user, string token, IGameJoinHandler responseHandler)
     {
 
-        using (UnityWebRequest req = RequestFactory.createAuthedGetRequest(JOIN_ENDPOINT, token))
+        using (UnityWebRequest req = RequestFactory.createAuthedGetRequest(StaticNetworkEndpoints.JOIN_ENDPOINT, token))
         {
             MatchConnectionDetails connectionDetails;
 
@@ -104,7 +101,7 @@ public class MatchmakingRequests
     public static IEnumerator PerformGameListingRequest(string user, string token, IGameListingHandler responseHandler)
     {
 
-        using (UnityWebRequest req = RequestFactory.createAuthedGetRequest(LISTING_ENDPOINT, token))
+        using (UnityWebRequest req = RequestFactory.createAuthedGetRequest(StaticNetworkEndpoints.LISTING_ENDPOINT, token))
         {
             GameListing listing;
 
