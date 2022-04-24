@@ -37,6 +37,13 @@ public class RobotMaster : MonoBehaviour
         }
     }
 
-    
-   
+    public void ErrorRobot(string name)
+    {
+        if (robots.ContainsKey(name) == true)
+        {
+            RobotController controller = gameObject.transform.Find(name).GetComponent<RobotController>();
+            controller.SetError();
+        }
+    }
+
 }
