@@ -169,8 +169,10 @@ public class NetworkInterface : MonoBehaviour
     {
         RobotMineEvent e = PayloadExtractor.GetRobotMineEvent(carrier);
 
-
         Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined at {e.SectorId}:X:{e.X}Y:{e.Y}");
+        GameObject r = GameObject.Find("Robots/" + e.RobotId);
+        (int x,int y) cord = RenderWorld.GetCordinates((e.X,e.Y),e.SectorId);
+        r.GetComponent<RobotController>().Mine(cord.x,cord.y);
         renderWorld.RemoveTile((e.X, e.Y), e.SectorId);
     }
 
