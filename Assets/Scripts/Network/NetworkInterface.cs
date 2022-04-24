@@ -118,7 +118,7 @@ public class NetworkInterface : MonoBehaviour
     {
         RobotListing listing = PayloadExtractor.GetRobotListing(carrier);
         foreach (Robot r in listing.robots) {
-            robotMaster.MoveRobot(r.RobotId, (r.Location.X, r.Location.Y), r.Location.SectorId);
+            robotMaster.MoveRobot(r.RobotId, (r.Location.X, r.Location.Y), r.Location.SectorId,r.Firmware);
         }
         Debug.Log("Caught robot listing");
      

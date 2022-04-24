@@ -13,6 +13,7 @@ public class RobotController : MonoBehaviour
     private IEnumerator cor;
     private bool corRunning;
 
+    [SerializeField]
     private string firmware;
 
     public string GetFirmware(string firm) {

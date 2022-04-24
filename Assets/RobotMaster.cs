@@ -37,6 +37,29 @@ public class RobotMaster : MonoBehaviour
         }
     }
 
-    
-   
+    public void MoveRobot(string name, (int x, int y) position, string sector,string firmware)
+    {
+        (int x, int y) offset = RenderWorld.ParseSector(sector);
+        if (robots.ContainsKey(name) == false) {
+            GameObject r = Instantiate(robotPref, this.transform);
+            r.name = name;
+
+            Vector3 spawnpoint = new Vector3(position.x, -position.y);
+            r.transform.position = spawnpoint;
+
+            RobotController controller = r.GetComponent<RobotController>();
+            controller.GoalPosition = spawnpoint;
+            controller.SetFirmware(firmware);
+
+            robots.Add(name, controller);
+        }
+        else {
+
+            RobotController controller = gameObject.transform.Find(name).GetComponent<RobotController>();
+            controller.MoveToPos(new Vector3(position.x + offset.x, -position.y + offset.y));
+        }
+    }
+
+
+
 }
