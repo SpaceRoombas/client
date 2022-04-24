@@ -4037,7 +4037,7 @@ GameObject:
   - component: {fileID: 873181534}
   - component: {fileID: 873181533}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4082,7 +4082,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: TERRAFORM SCORE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7321b36fe084e024e8f77570da8a2c3a, type: 2}
   m_sharedMaterial: {fileID: -8223023008735781298, guid: 7321b36fe084e024e8f77570da8a2c3a, type: 2}
@@ -4116,7 +4116,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -6846,7 +6846,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   robotMaster: {fileID: 675299827}
-  scoreText: {fileID: 873181533}
   renderWorld: {fileID: 2080263641}
   address: localhost
   port: 9001

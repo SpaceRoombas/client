@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 using ClientConnector.messages;
 using ClientConnector;
 using StaticContext;
@@ -7,7 +6,6 @@ using StaticContext;
 public class NetworkInterface : MonoBehaviour
 {
     public RobotMaster robotMaster;
-    public TextMeshProUGUI scoreText;
     public RenderWorld renderWorld;
 
     public string address;
@@ -173,9 +171,8 @@ public class NetworkInterface : MonoBehaviour
     {
         ScoreUpdateMessage e = PayloadExtractor.GetScoreUpdateMessage(carrier);
 
-        scoreText.text = $"{e.score}";
 
-        Debug.Log($"Robot {e.PlayerId}:{e.RobotId} Score is {e.score}");
+        Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined");
 
     }
 }
