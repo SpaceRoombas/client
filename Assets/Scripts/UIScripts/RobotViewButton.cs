@@ -16,11 +16,13 @@ public class RobotViewButton : MonoBehaviour
         GameObject text = GameObject.Find("Canvas/CodeEditor/Code Input");
         TMP_InputField field = text.GetComponent<TMP_InputField>();
         field.text = firmware;
+
+        GameObject editor = GameObject.Find("Canvas/CodeEditor");
+        editor.GetComponent<GetCode>().SetRobotName(name);
     }
 
     public void setNameFirmware(string n, string f)
     {
-        
         name = n;
         firmware = f;
     }
