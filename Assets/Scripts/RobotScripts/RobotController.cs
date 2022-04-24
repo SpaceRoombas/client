@@ -16,7 +16,7 @@ public class RobotController : MonoBehaviour
     [SerializeField]
     private string firmware;
 
-    public string GetFirmware(string firm) {
+    public string GetFirmware() {
         return firmware;
     }
     public void SetFirmware(string firm) {

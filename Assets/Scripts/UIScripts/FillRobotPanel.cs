@@ -24,12 +24,14 @@ public class FillRobotPanel : MonoBehaviour
 
     private void fillRobotPanel()
     {
-        foreach(Transform child in robotParent.transform)
+        foreach (Transform child in robotParent.transform)
         {
             GameObject tile = Instantiate(panelPrefab) as GameObject;
             tile.transform.SetParent(scrollViewContent.transform, false);
             tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = child.name;
-            Debug.Log(tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text);
+            RobotController robotController = child.GetComponent<RobotController>();
+            string firmware = robotController.GetFirmware();
+            tile.transform.GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = child.name;
         }
     }
 
@@ -44,6 +46,9 @@ public class FillRobotPanel : MonoBehaviour
             GameObject tile = Instantiate(panelPrefab) as GameObject;
             tile.transform.SetParent(scrollViewContent.transform, false);
             tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = child.name;
+            RobotController robotController = child.GetComponent<RobotController>();
+            string firmware = robotController.GetFirmware();
+            tile.transform.GetChild(1).GetChild(2).GetComponent<TMP_Text>().text = child.name;
         }
     }
 
