@@ -36,7 +36,7 @@ public class FillRobotPanel : MonoBehaviour
             tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = child.name;
             
             RobotController robotController = child.GetComponent<RobotController>();
-            tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = 
+            tile.transform.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text = 
                 "" + (int)robotController.transform.position.x + "," + (int)robotController.transform.position.y;
 
             string firmware = robotController.GetFirmware();
@@ -58,7 +58,7 @@ public class FillRobotPanel : MonoBehaviour
             tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = child.name;
 
             RobotController robotController = child.GetComponent<RobotController>();
-            tile.transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text =
+            tile.transform.GetChild(1).GetChild(1).GetComponent<TMP_Text>().text =
                 "" + (int)robotController.transform.position.x + "," + (int)robotController.transform.position.y;
 
             string firmware = robotController.GetFirmware();

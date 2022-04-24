@@ -46,22 +46,18 @@ public class CameraMovement : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, transform.position += Vector3.right, Time.deltaTime * speed);
                 focus = null;
             }
-           
+            if (Input.GetAxis("Mouse ScrollWheel") < 0 && Camera.main.orthographicSize <= 25) {
+                Camera.main.orthographicSize += zoomSpeed;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") > 0 && Camera.main.orthographicSize > 5) {
+                Camera.main.orthographicSize -= zoomSpeed;
+            }
+
         }
         if (focus != null) {
             transform.position = new Vector3(focus.position.x, focus.position.y, transform.position.z);
         }
 
-
-
-        if (Input.GetAxis("Mouse ScrollWheel") < 0 && Camera.main.orthographicSize <= 25)
-        {
-            Camera.main.orthographicSize += zoomSpeed;
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && Camera.main.orthographicSize > 5)
-        {
-            Camera.main.orthographicSize -= zoomSpeed;
-        }
     }
 
 }

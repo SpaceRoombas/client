@@ -113,8 +113,8 @@ public class NetworkInterface : MonoBehaviour
     private void MoveRobotPosition(ICarrierPigeon carrier)
     {
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
-        Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\"" +
-            $" moved to -> X: {movementEvent.X} Y: {movementEvent.Y} sector: {movementEvent.NewLocation.SectorId}");
+        //Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\"" +
+        //    $" moved to -> X: {movementEvent.X} Y: {movementEvent.Y} sector: {movementEvent.NewLocation.SectorId}");
 
         string sectorID = movementEvent.NewLocation.SectorId;
         robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y), sectorID);
@@ -125,6 +125,7 @@ public class NetworkInterface : MonoBehaviour
     {
         RobotListing listing = PayloadExtractor.GetRobotListing(carrier);
         foreach (Robot r in listing.robots) {
+            Debug.Log(r == null);
             robotMaster.MoveRobot(r.RobotId, (r.Location.X, r.Location.Y), r.Location.SectorId,r.Firmware);
             Debug.Log($" Robot \"{r.RobotId}\" made at -> X: {r.Location.X} Y: {r.Location.Y} sector: {r.Location.SectorId}");
 

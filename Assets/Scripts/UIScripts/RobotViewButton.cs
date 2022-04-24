@@ -8,8 +8,7 @@ public class RobotViewButton : MonoBehaviour
 {
     public string robotName;
     public string firmware;
-    public TMP_InputField input;
-    
+
     public void MovetoCodeEditor()
     {
         Debug.Log("pushed to editor");
