@@ -2,17 +2,29 @@ using UnityEngine;
 
 public class OpenAndClosePanels : MonoBehaviour
 {
-    public GameObject panel;
+    public GameObject codeEditor;
+    public GameObject robotsEditor;
 
-    public void openOrClose()
+    public void openOrCloseEditor()
     {
-        if (panel.activeSelf == false)
-        {
-            panel.SetActive(true);
+        if (codeEditor.activeSelf == false) {
+            codeEditor.SetActive(true);
         }
-        else
-        {
-            panel.SetActive(false);
+        else {
+            codeEditor.SetActive(false);
+            robotsEditor.SetActive(false);
         }
+        
+    }
+    public void openOrCloseRobots()
+    {
+        if (robotsEditor.activeSelf == false) {
+            robotsEditor.SetActive(true);
+            codeEditor.SetActive(true);
+        }
+        else {
+            robotsEditor.SetActive(false);
+        }
+
     }
 }

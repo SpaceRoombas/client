@@ -8,20 +8,23 @@ public class FillRobotPanel : MonoBehaviour
     public GameObject robotParent;
     public GameObject scrollViewContent;
     public GameObject panelPrefab;
-
+    private float timepass;
 
     private int counter;
     void Start()
     {
-       fillRobotPanel(); 
+        timepass = 0f;
+        fillRobotPanel(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("u")) {
+        if (timepass > 1) {
             updateRobotPanel();
+            timepass = 0;
         }
+        timepass += Time.deltaTime;
     }
 
     private void fillRobotPanel()

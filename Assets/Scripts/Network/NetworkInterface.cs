@@ -164,7 +164,7 @@ public class NetworkInterface : MonoBehaviour
 
 
         Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined at {e.SectorId}:X:{e.X}Y:{e.Y}");
-
+        renderWorld.RemoveTile((e.X, e.Y), e.SectorId);
     }
 
     private void LogScoreUpdate(ICarrierPigeon carrier)
