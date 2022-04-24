@@ -19,7 +19,9 @@ public class FillRobotPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateRobotPanel();
+        if (Input.GetKeyDown("u")) {
+            updateRobotPanel();
+        }
     }
 
     private void fillRobotPanel()
@@ -36,7 +38,7 @@ public class FillRobotPanel : MonoBehaviour
         }
     }
 
-    private void updateRobotPanel()
+    public void updateRobotPanel()
     {
         foreach (Transform panelChild in scrollViewContent.transform)
         {
