@@ -110,12 +110,11 @@ public class NetworkInterface : MonoBehaviour
 
     private void MoveRobotPosition(ICarrierPigeon carrier)
     {
-        //Debug.Log("que size:"+serverConnection.quesize);
         RobotMovementEvent movementEvent = PayloadExtractor.GetRobotMovementEvent(carrier);
         Debug.Log($"Player \"{movementEvent.PlayerId}\" Robot \"{movementEvent.RobotId}\" moved to -> X: {movementEvent.X} Y: {movementEvent.Y}");
-      
-        string sectorID = "0,0"; // TODO Get sector id from robot position.
-        robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y),sectorID);
+
+        string sectorID = movementEvent.NewLocation.SectorId;
+        robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y), sectorID);
         
     }
 
