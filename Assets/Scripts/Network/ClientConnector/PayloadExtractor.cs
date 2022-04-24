@@ -68,6 +68,26 @@ namespace ClientConnector
             return null;
         }
 
+        public static RobotMineEvent GetRobotMineEvent(ICarrierPigeon carrier)
+        {
+            if (Verify(carrier, "PlayerRobotMineMessage"))
+            {
+                return ((CarrierPigeon<RobotMineEvent>)carrier).payload;
+            }
+
+            return null;
+        }
+
+        public static ScoreUpdateMessage GetScoreUpdateMessage(ICarrierPigeon carrier)
+        {
+            if (Verify(carrier, "ScoreUpdateMessage"))
+            {
+                return ((CarrierPigeon<ScoreUpdateMessage>)carrier).payload;
+            }
+
+            return null;
+        }
+
 
     }
 }

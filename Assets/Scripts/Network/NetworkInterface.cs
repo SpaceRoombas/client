@@ -79,6 +79,16 @@ public class NetworkInterface : MonoBehaviour
                     this.HandleIncomingMapSectorListing(carrier);
                 }
 
+                if(carrier.GetPayloadType() == "ScoreUpdateMessage")
+                {
+                    this.LogScoreUpdate(carrier);
+                }
+
+                if (carrier.GetPayloadType() == "PlayerRobotMineMessage")
+                {
+                    this.LogMineEvent(carrier);
+                }
+
             }
         }
    
@@ -145,6 +155,24 @@ public class NetworkInterface : MonoBehaviour
             renderWorld.RenderMap(map, sector.SectorId);
         }
         Debug.Log("Caught MapSector listing");
+
+    }
+
+    private void LogMineEvent(ICarrierPigeon carrier)
+    {
+        RobotMineEvent e = PayloadExtractor.GetRobotMineEvent(carrier);
+
+
+        Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined at {e.SectorId}:X:{e.X}Y:{e.Y}");
+
+    }
+
+    private void LogScoreUpdate(ICarrierPigeon carrier)
+    {
+        ScoreUpdateMessage e = PayloadExtractor.GetScoreUpdateMessage(carrier);
+
+
+        Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined");
 
     }
 }
