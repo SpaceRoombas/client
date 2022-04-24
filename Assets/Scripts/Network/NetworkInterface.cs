@@ -71,7 +71,7 @@ public class NetworkInterface : MonoBehaviour
 
                 if (carrier.GetPayloadType() == "PlayerRobotErrorMessage")
                 {
-                    this.LogRobotError(carrier);
+                    this.RobotError(carrier);
                 }
 
                 if(carrier.GetPayloadType() == "MapSectorListing")
@@ -124,13 +124,13 @@ public class NetworkInterface : MonoBehaviour
      
     }
 
-    private void LogRobotError(ICarrierPigeon carrier)
+    private void RobotError(ICarrierPigeon carrier)
     {
         RobotErrorEvent err = PayloadExtractor.GetRobotErrorEvent(carrier);
 
+        robotMaster.ErrorRobot(err.RobotId);
 
         Debug.LogError($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
-
     }
 
 
