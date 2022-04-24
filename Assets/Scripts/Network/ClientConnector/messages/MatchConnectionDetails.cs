@@ -10,5 +10,14 @@ namespace ClientConnector.messages
         public int port { get; set; }
         [JsonPropertyName("players")]
         public string[] Players { get; set; }
+
+        public MatchConnectionDetails(string name, int p, string[] play)
+        {
+            Host = name;
+            port = p;
+            Players = play;
+        }
     }
+
+
 }
