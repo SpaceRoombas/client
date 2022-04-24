@@ -71,12 +71,22 @@ public class NetworkInterface : MonoBehaviour
 
                 if (carrier.GetPayloadType() == "PlayerRobotErrorMessage")
                 {
-                    this.LogRobotError(carrier);
+                    this.RobotError(carrier);
                 }
 
                 if(carrier.GetPayloadType() == "MapSectorListing")
                 {
                     this.HandleIncomingMapSectorListing(carrier);
+                }
+
+                if(carrier.GetPayloadType() == "ScoreUpdateMessage")
+                {
+                    this.LogScoreUpdate(carrier);
+                }
+
+                if (carrier.GetPayloadType() == "PlayerRobotMineMessage")
+                {
+                    this.LogMineEvent(carrier);
                 }
 
             }
@@ -124,13 +134,13 @@ public class NetworkInterface : MonoBehaviour
      
     }
 
-    private void LogRobotError(ICarrierPigeon carrier)
+    private void RobotError(ICarrierPigeon carrier)
     {
         RobotErrorEvent err = PayloadExtractor.GetRobotErrorEvent(carrier);
 
+        robotMaster.ErrorRobot(err.RobotId);
 
         Debug.LogError($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
-
     }
 
 
@@ -145,6 +155,24 @@ public class NetworkInterface : MonoBehaviour
             renderWorld.RenderMap(map, sector.SectorId);
         }
         Debug.Log("Caught MapSector listing");
+
+    }
+
+    private void LogMineEvent(ICarrierPigeon carrier)
+    {
+        RobotMineEvent e = PayloadExtractor.GetRobotMineEvent(carrier);
+
+
+        Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined at {e.SectorId}:X:{e.X}Y:{e.Y}");
+
+    }
+
+    private void LogScoreUpdate(ICarrierPigeon carrier)
+    {
+        ScoreUpdateMessage e = PayloadExtractor.GetScoreUpdateMessage(carrier);
+
+
+        Debug.Log($"Robot {e.PlayerId}:{e.RobotId} mined");
 
     }
 }

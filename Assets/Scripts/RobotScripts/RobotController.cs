@@ -7,6 +7,7 @@ public class RobotController : MonoBehaviour
     
     public float speed;
     public bool playerControlled;
+    public GameObject errorText;
 
     private Animator animator;
 
@@ -66,6 +67,15 @@ public class RobotController : MonoBehaviour
             gameObject.transform.position += Time.deltaTime * speed * dir;
         }
 
+    }
+
+    public void SetError(){
+        errorText.SetActive(true);
+        Invoke("ResetError", 10.0f);
+    }
+
+    public void ResetError(){
+        errorText.SetActive(false);
     }
 
     public void MoveToPos(Vector3 endPos) {

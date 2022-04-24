@@ -16,7 +16,9 @@ public class GetCode : MonoBehaviour
     }
     public void getCode()
     {
-        Debug.Log("submit code:"+code.text);
+        GameObject r = GameObject.Find("Robots/"+robotName);
+        r.GetComponent<RobotController>().SetFirmware(code.text);
+        Debug.Log("submit code:"+robotName+code.text);
         network.SendFirmwareChange(robotName, code.text);
     }
 
