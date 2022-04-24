@@ -3128,7 +3128,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2114181089}
         m_TargetAssemblyTypeName: UpdateGameListButtons, Assembly-CSharp
-        m_MethodName: changeButtonInformation
+        m_MethodName: TriggerFetchGameListing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
