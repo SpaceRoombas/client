@@ -9,6 +9,7 @@ namespace ClientConnector
 
         public const int BUFFER_SIZE_56KB = 56 * 1024;
         public const int BUFFER_SIZE_2MB = 2 * 1024 * 1024;
+        public const int BUFFER_SIZE_16MB = 16 * 1024 * 1024;
 
         public static Func<string, byte[]> StringToBytes = str => Encoding.UTF8.GetBytes(str);
         public static Func<string, ArraySegment<byte>> StringToByteSegment = str => new ArraySegment<byte>(StringToBytes(str));

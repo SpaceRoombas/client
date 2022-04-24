@@ -88,6 +88,16 @@ namespace ClientConnector
             return null;
         }
 
+        public static PlayerFirmwareChange GetPlayerFirmwareChange(ICarrierPigeon carrier)
+        {
+            if (Verify(carrier, "PlayerFirmwareChange"))
+            {
+                return ((CarrierPigeon<PlayerFirmwareChange>)carrier).payload;
+            }
+
+            return null;
+        }
+
 
     }
 }

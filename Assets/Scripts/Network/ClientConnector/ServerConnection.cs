@@ -59,7 +59,7 @@ namespace ClientConnector
 
         public ServerConnection(PlayerDetails playerDetails, string address, int port)
         {
-            this.client = new Client(Util.BUFFER_SIZE_56KB)
+            this.client = new Client(Util.BUFFER_SIZE_16MB)
             {
                 OnData = (data) => this.HandleIncoming(data),
                 OnConnected = () => this.HandleConnect()
