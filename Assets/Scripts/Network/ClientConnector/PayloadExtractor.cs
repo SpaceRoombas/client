@@ -58,6 +58,16 @@ namespace ClientConnector
             return null;
         }
 
+        public static MapSectorListingUpdate GetMapSectorListingUpdate(ICarrierPigeon carrier)
+        {
+            if (Verify(carrier, "MapSectorListing"))
+            {
+                return ((CarrierPigeon<MapSectorListingUpdate>)carrier).payload;
+            }
+
+            return null;
+        }
+
 
     }
 }

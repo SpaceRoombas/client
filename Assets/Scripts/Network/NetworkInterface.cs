@@ -83,6 +83,11 @@ public class NetworkInterface : MonoBehaviour
                     this.LogRobotError(carrier);
                 }
 
+                if(carrier.GetPayloadType() == "MapSectorListing")
+                {
+                    this.LogMapSectorListing(carrier);
+                }
+
             }
         }
    
@@ -134,6 +139,21 @@ public class NetworkInterface : MonoBehaviour
 
 
         Debug.LogError($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
+
+    }
+
+
+    private void LogMapSectorListing(ICarrierPigeon carrier)
+    {
+        MapSectorListingUpdate listing = PayloadExtractor.GetMapSectorListingUpdate(carrier);
+        int[,] map;
+
+        foreach (MapSector sector in listing.MapSectors)
+        {
+            map = sector.DecodeMap();
+            renderWorld.RenderMap(map, sector.SectorId);
+        }
+        Debug.Log("Caught MapSector listing");
 
     }
 }
