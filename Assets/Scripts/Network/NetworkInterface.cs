@@ -91,6 +91,11 @@ public class NetworkInterface : MonoBehaviour
                     this.LogMineEvent(carrier);
                 }
 
+                if(carrier.GetPayloadType() == "PlayerFirmwareChange")
+                {
+                    HandleServerFirmwareChange(carrier);
+                }
+
             }
         }
    
@@ -177,5 +182,12 @@ public class NetworkInterface : MonoBehaviour
 
         Debug.Log($"Robot {e.PlayerId}:{e.RobotId} Score is {e.score}");
 
+    }
+
+    private void HandleServerFirmwareChange(ICarrierPigeon carrier)
+    {
+        PlayerFirmwareChange e = PayloadExtractor.GetPlayerFirmwareChange(carrier);
+
+        robotMaster.AddFirmwareFromServer(e.RobotId, e.Code);
     }
 }

@@ -5,14 +5,13 @@ using UnityEngine;
 public class RobotMaster : MonoBehaviour
 {
     public GameObject robotPref;
-    public Dictionary<string, RobotController> robots; 
+    public Dictionary<string, RobotController> robots;
+    public Dictionary<string, string> serverFirmwares;
     // Start is called before the first frame update
     void Start()
     {
         robots = new Dictionary<string, RobotController>();
-        //MoveRobot("R0", (0, 0));
-        //MoveRobot("R1", (1, 3));
-
+        serverFirmwares = new Dictionary<string, string>();
     }
 
 
@@ -27,6 +26,11 @@ public class RobotMaster : MonoBehaviour
 
             RobotController controller = r.GetComponent<RobotController>();
             controller.GoalPosition = spawnpoint;
+
+            if (serverFirmwares.ContainsKey(name))
+            {
+                controller.SetFirmware(serverFirmwares[name]);
+            }
 
             robots.Add(name, controller);
         }
@@ -48,7 +52,10 @@ public class RobotMaster : MonoBehaviour
 
             RobotController controller = r.GetComponent<RobotController>();
             controller.GoalPosition = spawnpoint;
-            controller.SetFirmware(firmware);
+            if (serverFirmwares.ContainsKey(name))
+            {
+                controller.SetFirmware(serverFirmwares[name]);
+            }
             robots.Add(name, controller);
         }
         else {
@@ -64,6 +71,23 @@ public class RobotMaster : MonoBehaviour
         {
             RobotController controller = gameObject.transform.Find(name).GetComponent<RobotController>();
             controller.SetError();
+        }
+    }
+
+    public void AddFirmwareFromServer(string robot_id, string firmware)
+    {
+        RobotController controller;
+        serverFirmwares.Add(robot_id, firmware);
+
+
+        if(robots.ContainsKey(robot_id))
+        {
+            controller = robots[robot_id];
+
+            if(controller.GetFirmware() == string.Empty)
+            {
+                controller.SetFirmware(firmware);
+            }
         }
     }
 
