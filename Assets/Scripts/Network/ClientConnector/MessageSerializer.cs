@@ -26,6 +26,8 @@ namespace ClientConnector
             this.deserializationTypes.Add("RobotListingMessage", typeof(CarrierPigeon<RobotListing>));
             this.deserializationTypes.Add("PlayerRobotErrorMessage", typeof(CarrierPigeon<RobotErrorEvent>));
             this.deserializationTypes.Add("MapSectorListing", typeof(CarrierPigeon<MapSectorListingUpdate>));
+            this.deserializationTypes.Add("PlayerRobotMineMessage", typeof(CarrierPigeon<RobotMineEvent>));
+            this.deserializationTypes.Add("ScoreUpdateMessage", typeof(CarrierPigeon<ScoreUpdateMessage>));
         }
 
         private void initalizeCarrierTypes()
