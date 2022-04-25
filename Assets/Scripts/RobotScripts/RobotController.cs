@@ -10,6 +10,8 @@ public class RobotController : MonoBehaviour
     public GameObject errorText;
 
     private Animator animator;
+    public Transform particleTransform;
+    public ParticleSystem mineParticle;
 
     private IEnumerator cor;
     private bool corRunning;
@@ -38,6 +40,7 @@ public class RobotController : MonoBehaviour
         corRunning = false;
         animator = GetComponent<Animator>();
         MoveToPos(goalPosition);
+        
     }
 
     private void Update()
@@ -121,7 +124,47 @@ public class RobotController : MonoBehaviour
         corRunning = false;
     }
 
-    
+    public void Mine(float mine_x, float mine_y){ //0 north, 1 east, 2 south, 3west  
+        float x = transform.position.x;
+        float y = transform.position.y;
+        int direction = 0;
+        if (Mathf.Abs(mine_x - x) > Mathf.Abs(mine_y - y)) {
+            if (mine_x > x) {
+                direction = 1;
+            }
+            else {
+                direction = 3;
+            }
+        }
+        else {
+            if (mine_y > y) {
+                direction = 2;
+            }
+            else {
+                direction = 0;
+            }
+        }
+
+
+        if (direction == 2) {
+            particleTransform.localRotation = Quaternion.Euler(0, 0, 90);
+        }
+        else if (direction == 1) {
+            particleTransform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else if (direction == 0) {
+            particleTransform.localRotation = Quaternion.Euler(0, 0, 270);
+        }
+        else if (direction == 3) {
+            particleTransform.localRotation = Quaternion.Euler(0, 0, 180);
+        }
+
+        mineParticle.Play();
+
+    }
+
+   
+
 
 }
 

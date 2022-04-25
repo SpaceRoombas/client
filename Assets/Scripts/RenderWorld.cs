@@ -48,7 +48,7 @@ public class RenderWorld : MonoBehaviour
         
     }
 
-    public static (int x, int y) ParseSector(string sector) {
+    public static (int x, int y) ParseSector(string sector) {// parse sector and sends offset
 
         string[] split = sector.Split(',');
         return (int.Parse(split[0])*sectorSize, int.Parse(split[1])*sectorSize);
