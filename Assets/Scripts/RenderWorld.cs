@@ -7,12 +7,15 @@ public class RenderWorld : MonoBehaviour
 {
     int[,] map;
 
+    public GameObject particles;
     public Tilemap tilemap;
     public Tilemap resourceTilemap;
     public TileBase tile; 
     public TileBase tilenull;
+    public TileBase tileGrass;
     
     public static int sectorSize;
+
 
 
     // Start is called before the first frame update
@@ -39,7 +42,7 @@ public class RenderWorld : MonoBehaviour
         map[map.GetUpperBound(0), 0] = 1;
         RenderMap(map, "0, 0");// bottom right
         */
-        
+
     }
  
     // Update is called once per frame
@@ -106,5 +109,13 @@ public class RenderWorld : MonoBehaviour
         resourceTilemap.SetTile(new Vector3Int(position.x + offset.x, -position.y + offset.y, 0), null);
     }
 
-    
+   
+    public void TerraformTile((int x, int y) position)
+    {
+        //resourceTilemap.SetTile(new Vector3Int(position.x, position.y, 0), tileGrass);
+        GameObject part = GameObject.Instantiate(particles);
+        part.transform.position = new Vector3(position.x, position.y, 2);
+    }
+
+
 }
