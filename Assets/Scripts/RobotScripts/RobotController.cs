@@ -146,13 +146,13 @@ public class RobotController : MonoBehaviour
         }
 
 
-        if (direction == 0) {
+        if (direction == 2) {
             particleTransform.localRotation = Quaternion.Euler(0, 0, 90);
         }
         else if (direction == 1) {
             particleTransform.localRotation = Quaternion.Euler(0, 0, 0);
         }
-        else if (direction == 2) {
+        else if (direction == 0) {
             particleTransform.localRotation = Quaternion.Euler(0, 0, 270);
         }
         else if (direction == 3) {

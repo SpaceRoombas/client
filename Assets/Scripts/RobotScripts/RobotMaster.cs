@@ -77,8 +77,9 @@ public class RobotMaster : MonoBehaviour
     public void AddFirmwareFromServer(string robot_id, string firmware)
     {
         RobotController controller;
-        serverFirmwares.Add(robot_id, firmware);
-
+        
+        serverFirmwares[robot_id] =firmware;
+        
         if(robots.ContainsKey(robot_id))
         {
             controller = robots[robot_id];
