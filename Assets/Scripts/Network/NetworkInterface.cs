@@ -147,7 +147,7 @@ public class NetworkInterface : MonoBehaviour
 
         robotMaster.ErrorRobot(err.RobotId);
 
-        Debug.LogError($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
+        Debug.Log($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
     }
 
 
@@ -181,7 +181,8 @@ public class NetworkInterface : MonoBehaviour
         ScoreUpdateMessage e = PayloadExtractor.GetScoreUpdateMessage(carrier);
 
         scoreText.text = $"{e.score}";
-
+        GameObject r = GameObject.Find("Robots/" + e.RobotId);
+        renderWorld.TerraformTile(((int)r.transform.position.x,(int) r.transform.position.y));
         Debug.Log($"Robot {e.PlayerId}:{e.RobotId} Score is {e.score}");
 
     }
