@@ -7748,7 +7748,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735751759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25, y: -25, z: -187}
+  m_LocalPosition: {x: 0, y: 0, z: -187}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1937589338}
@@ -8987,10 +8987,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8bb6ae233d42ed439d682572ecdcad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particles: {fileID: 3088299561293866509, guid: 734eefd3338df024da38e7de994c0c78, type: 3}
   tilemap: {fileID: 740700565}
   resourceTilemap: {fileID: 417841600}
   tile: {fileID: 11400000, guid: 6e7f366a3c20255498f41def48d23aa3, type: 2}
   tilenull: {fileID: 11400000, guid: a0d765c68ffd51e439b9d07326429ac3, type: 2}
+  tileGrass: {fileID: 11400000, guid: 56582da67cd9e4e4280fa1b252cb2c88, type: 2}
 --- !u!156049354 &2080263642
 Grid:
   m_ObjectHideFlags: 0
