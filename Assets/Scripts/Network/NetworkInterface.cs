@@ -4,9 +4,12 @@ using ClientConnector.messages;
 using ClientConnector;
 using StaticContext;
 
+
 public class NetworkInterface : MonoBehaviour
 {
     public RobotMaster robotMaster;
+    public RobotMaster robotMasterEnemy;
+        
     public TextMeshProUGUI scoreText;
     public RenderWorld renderWorld;
 
@@ -124,7 +127,12 @@ public class NetworkInterface : MonoBehaviour
         //    $" moved to -> X: {movementEvent.X} Y: {movementEvent.Y} sector: {movementEvent.NewLocation.SectorId}");
 
         string sectorID = movementEvent.NewLocation.SectorId;
-        robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y), sectorID);
+        if (movementEvent.PlayerId == GameConnectionContext.Username) {
+            robotMaster.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y), sectorID);
+        }
+        else { 
+            robotMasterEnemy.MoveRobot(movementEvent.RobotId, (movementEvent.X, movementEvent.Y), sectorID);
+        }
         
     }
 
