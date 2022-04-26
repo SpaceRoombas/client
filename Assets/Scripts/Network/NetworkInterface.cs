@@ -155,7 +155,7 @@ public class NetworkInterface : MonoBehaviour
 
         robotMaster.ErrorRobot(err.RobotId);
 
-        Debug.LogError($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
+        Debug.Log($"Robot {err.PlayerId}:{err.RobotId} had error \"{err.Error} \"");
     }
 
 
